@@ -1,0 +1,42 @@
+﻿@page "/shoppinglist"
+@using FirstBlazorApp.Data
+
+<h3>ShoppingList</h3>
+
+<input placeholder="Grocery Name" @bind="groceryName" />
+<input placeholder="Grocery Price" @bind="groceryPrice" />
+<button @onclick="AddGrocery">Add Grocery</button>
+
+<ul>
+    @foreach(var grocery in groceries)
+    {
+        <li>@grocery.Name -- @grocery.Price</li>
+    }
+</ul>
+
+<h1>Total (@groceries.Sum(grocery => grocery.Price))</h1>
+<h1>Counter = @counter</h1>
+
+
+@code {
+    private string groceryName;
+    private float groceryPrice;
+    private int counter = 0;
+
+    private List<Grocery> groceries = new();
+
+    private void AddGrocery()
+    {
+        if(!string.IsNullOrWhiteSpace(groceryName) && groceryPrice > 0)
+        {
+            groceries.Add(new Grocery
+                {
+                    Name = groceryName,
+                    Price = groceryPrice
+                });
+            groceryName = string.Empty;
+            groceryPrice = 0;
+            counter++;
+        }
+    }
+}

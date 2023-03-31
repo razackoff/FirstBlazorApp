@@ -9,6 +9,7 @@
 <input placeholder="Grocery Price" @bind="groceryPrice" />
 <button @onclick="AddGrocery">Add Grocery</button>
 
+<h1>Total (@groceries.Sum(grocery => grocery.Price))</h1>
 <ul>
     @foreach(var grocery in groceries)
     {
@@ -16,7 +17,6 @@
     }
 </ul>
 
-<h1>Total (@groceries.Sum(grocery => grocery.Price))</h1>
 
 
 @code {

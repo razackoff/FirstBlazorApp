@@ -1,6 +1,8 @@
 ﻿@page "/shoppinglist"
 @using FirstBlazorApp.Data
 
+<PageTitle>@title</PageTitle>
+
 <h3>ShoppingList</h3>
 
 <input placeholder="Grocery Name" @bind="groceryName" />
@@ -18,7 +20,9 @@
 
 
 @code {
-    private string groceryName;
+    private string title = "Our Groceries";
+
+    private string groceryName = "";
     private float groceryPrice;
     private int counter = 0;
 

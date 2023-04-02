@@ -6,9 +6,23 @@
 
 <h3>ShoppingList</h3>
 
-<input placeholder="Grocery Name" @bind="groceryName" />
-<input placeholder="Grocery Price" @bind="groceryPrice" />
-<button @onclick="AddGrocery">Add Grocery</button>
+<EditForm Model="@grocery" OnSubmit="AddGrocery">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <p>
+        <label>
+            Name:
+            <InputText @bind-Value="@grocery.Name"></InputText>
+        </label>
+    </p>
+    <p>
+        <label>
+            Price:
+            <InputNumber @bind-Value="@grocery.Price"></InputNumber>
+        </label>
+    </p>
+    <button type="submit">Add Grocery</button>
+</EditForm>
 
 <table class="table table-sm">
     <tr>
@@ -30,23 +44,13 @@
     private string groceryName;
     private float groceryPrice;
     private int counter = 0;
-
+    private Grocery grocery = new();
     private List<Grocery> groceries = new();
 
     private void AddGrocery()
     {
-        if(!string.IsNullOrWhiteSpace(groceryName) && groceryPrice > 0)
-        {
-            groceries.Add(new Grocery
-                {
-                    Name = groceryName,
-                    Price = groceryPrice
-                });
-            sum += groceryPrice;
-            groceryName = string.Empty;
-            groceryPrice = 0;
-            counter++;
-        }
+        groceries.Add(grocery);
+        grocery = new();
         UpdateTotalAmount();
     }
 

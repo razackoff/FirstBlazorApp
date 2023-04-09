@@ -7,6 +7,10 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
+<h4>Enter city</h4>
+<input type="text" @bind="@City" />
+<button onclick="GetWeatherForecast">Search</button>
+
 @if (forecasts == null)
 {
     <p><em>Loading...</em></p>
@@ -14,7 +18,7 @@
 else
 {
     var today = DateTime.Today;
-    <h4>Today: @today.ToShortDateString()</h4>
+    <h4>@City Today: @today.ToShortDateString()</h4>
     <p>Wind: @forecasts.Wind</p>
     <p>Temp (C): @forecasts.Temperature</p>
     <p>Summary @forecasts.Description</p>
@@ -42,9 +46,16 @@ else
 @code {
     private WeatherForecast? forecasts;
 
+    private string City = "Berlin";
+
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast>("Berlin");
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast>(City);
+    }
+
+    private async Task GetWeatherForecast()
+    {
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast>(City);
     }
 
     public partial class WeatherForecast : Forecast
